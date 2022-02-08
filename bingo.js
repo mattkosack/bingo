@@ -7,7 +7,7 @@ let phrases = ["Green to Green", "Jeep Talk", "The Hands",
                 "Condes- cension", "You Type Slow", "Abstraction", 
                 "Send Me An Email", "Long Plickers","Uncle Bob",
                 "Hiking","Over Time", "Says he's a Geek", "Github Workflow",
-                "g","h","i","k","j","l"];
+                "REST API","Profession- alism","i","k","j","l"];
 
 let copy_phrases;
 
