@@ -3,10 +3,10 @@ let usedPhrases = new Array(11);
 
 let phrases = ["Green to Green", "Jeep Talk", "The Hands", 
                 "Learning Cycle", "Unnoticed Typo", "Shouting", 
-                "Comma", "Poor Spelling", "Sharon", "Public Shaming",
+                "Comma", "Poor Spelling", "Talk About Weekend", "Public Shaming",
                 "Condes- cension", "You Type Slow", "Abstraction", 
                 "Send Me An Email", "Long Plickers","Uncle Bob",
-                "Hiking","Over Time","e","g","h","i","k","j","l"];
+                "Hiking","Over Time","Says he's a Geek","g","h","i","k","j","l"];
 
 let copy_phrases;
 
