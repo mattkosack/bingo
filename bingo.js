@@ -42,7 +42,11 @@ function anotherCard() {
 }
 
 function onClick(e) {
-    e.target.style.backgroundColor = 'cyan';
+    if (e.target.style.backgroundColor === 'cyan') {
+        e.target.style.backgroundColor = 'white';
+    } else {
+        e.target.style.backgroundColor = 'cyan';
+    }
 }
 
 function initEvents() {
