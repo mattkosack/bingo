@@ -6,7 +6,8 @@ let phrases = ["Green to Green", "Jeep Talk", "The Hands",
                 "Comma", "Poor Spelling", "Talk About Weekend", "Public Shaming",
                 "Condes- cension", "You Type Slow", "Abstraction", 
                 "Send Me An Email", "Long Plickers","Uncle Bob",
-                "Hiking","Over Time","Says he's a Geek","g","h","i","k","j","l"];
+                "Hiking","Over Time", "Says he's a Geek", "Github Workflow",
+                "g","h","i","k","j","l"];
 
 let copy_phrases;
 
@@ -44,9 +45,7 @@ function anotherCard() {
 function onClick(e) {
     if (e.target.style.backgroundColor === 'cyan') {
         e.target.style.backgroundColor = 'white';
-    } else {
-        e.target.style.backgroundColor = 'cyan';
-    }
+    } else { e.target.style.backgroundColor = 'cyan'; }
 }
 
 function initEvents() {
