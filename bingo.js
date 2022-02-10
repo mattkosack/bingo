@@ -9,7 +9,7 @@ let phrases = [
         "Send Me An Email", "Long Plickers","Uncle Bob",
         "Hiking", "Over Time", "Says he's a Geek", "Github Workflow",
         "REST API", "Profession- alism","Beer","Tea", "HTTP is Just Text",
-        "gitkeeper", "'word' instead of swear", "dotenv/.env", "thing <b>is</b> thing",
+        "gitkeeper", "'word' instead of swear", "dotenv/ .env", "thing <b>is</b> thing",
         "auto-magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
         "Multiple Ignored Texts", "Canvas Edits", "1Password"
     ];
