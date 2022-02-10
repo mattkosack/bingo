@@ -2,4 +2,4 @@
 
 It's bingo...
 
-Access it [here](mattkosack.github.io/bingo)
+Access it [here](https://mattkosack.github.io/bingo/)
