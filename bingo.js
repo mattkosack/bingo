@@ -14,6 +14,7 @@ let phrases = [
 let copy_phrases;
 let usedNums = new Array(phrases.length);
 let usedPhrases = new Array(phrases.length);
+let darkMode = false;
 
 function newCard() {
     copy_phrases = phrases.map((x) => x); 
@@ -59,9 +60,13 @@ function onClick(e) {
 }
 
 function initEvents() {
-    for (let i=0; i<24; i++) { 
+    var color = "rgb(153, 170, 181)";
+    if (!darkMode) {
+        color = "white";
+    }
+    for (let i=0; i < 24; i++) { 
         document.getElementById("square"+i).addEventListener("click", onClick);
-        document.getElementById("square"+i).style.backgroundColor = "white"; 
+        document.getElementById("square"+i).style.backgroundColor = color; 
     }
 }
 
@@ -80,11 +85,13 @@ function switchSquareColor(square) {
 function switchColorMode() {
     /* Swap text and color to change color mode */
     var button = document.querySelector("#colorMode");
-    if (button.innerText === "Light Mode") {
+    if (darkMode) {
+        darkMode = false;
         document.body.style.backgroundColor= "#1abc9c";
         button.innerText = "Dark Mode";
         document.querySelector("#squarefree").style.background = "cyan";
     } else {
+        darkMode = true;
         document.body.style.backgroundColor= "#23272a";
         button.innerText = "Light Mode";
         document.querySelector("#squarefree").style.background = "rgb(114, 137, 218)";
