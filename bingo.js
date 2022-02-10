@@ -16,12 +16,14 @@ let usedNums = new Array(phrases.length);
 let usedPhrases = new Array(phrases.length);
 
 function newCard() {
+    /* Makes the board and initializes events. */
     copy_phrases = phrases.map((x) => x); 
     for(var i=0; i < 24; i++) { setSquare(i); } 
     initEvents();
 }
 
 function setSquare(thisSquare) {
+    /* Gets a phrase for the square and adds it to the html. */
 	var currSquare = "square"+thisSquare;
 	var newNum, newPhrase;
 	
@@ -35,6 +37,7 @@ function setSquare(thisSquare) {
 }
 
 function getNewPhrase() {
+    /* Gets a Random Phrase and removes it from the pool. */
     let num = Math.floor(Math.random() * copy_phrases.length)
     let phrase = copy_phrases[num];
     copy_phrases.splice(num, 1);
@@ -42,11 +45,13 @@ function getNewPhrase() {
 }
 
 function anotherCard() {
+    /* Regenerates the card. */
 	for(var i=1; i < usedNums.length; i++) { usedNums[i] = false; }
 	newCard();
 }
 
 function onClick(e) {
+    /* Changes colors when you click on a square. */
     if (e.target.style.backgroundColor === "cyan") {
         e.target.style.backgroundColor = "white";
     } else if (e.target.style.backgroundColor === "white") {
@@ -59,6 +64,7 @@ function onClick(e) {
 }
 
 function initEvents() {
+    /* Initializes events. */
     for (let i=0; i<24; i++) { 
         document.getElementById("square"+i).addEventListener("click", onClick);
         document.getElementById("square"+i).style.backgroundColor = "white"; 
@@ -66,6 +72,7 @@ function initEvents() {
 }
 
 function switchSquareColor(square) {
+    /* Changes the colors for dark mode. */
     if (square.style.backgroundColor === "white") {
         square.style.backgroundColor = "rgb(153, 170, 181)";
     } else if (square.style.backgroundColor === "rgb(153, 170, 181)") {
