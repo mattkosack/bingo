@@ -1,5 +1,4 @@
-let usedNums = new Array(11);
-let usedPhrases = new Array(11);
+
 
 let phrases = [
         "Green to Green", "Jeep Talk", "The Hands", 
@@ -15,6 +14,8 @@ let phrases = [
     ];
 
 let copy_phrases;
+let usedNums = new Array(phrases.length);
+let usedPhrases = new Array(phrases.length);
 
 function newCard() {
     copy_phrases = phrases.map((x) => x); 
