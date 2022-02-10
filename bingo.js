@@ -1,5 +1,3 @@
-
-
 let phrases = [
         "Green to Green", "Jeep Talk", "The Hands", 
         "Learning Cycle", "Unnoticed Typo", "Shouting", 
@@ -49,14 +47,49 @@ function anotherCard() {
 }
 
 function onClick(e) {
-    if (e.target.style.backgroundColor === 'cyan') {
-        e.target.style.backgroundColor = 'white';
-    } else { e.target.style.backgroundColor = 'cyan'; }
+    if (e.target.style.backgroundColor === "cyan") {
+        e.target.style.backgroundColor = "white";
+    } else if (e.target.style.backgroundColor === "white") {
+        e.target.style.backgroundColor = "cyan";
+    } else if (e.target.style.backgroundColor === "rgb(153, 170, 181)") {
+        e.target.style.backgroundColor = "rgb(114, 137, 218)";
+    } else if (e.target.style.backgroundColor === "rgb(114, 137, 218)") {
+        e.target.style.backgroundColor = "rgb(153, 170, 181)";
+    }
 }
 
 function initEvents() {
     for (let i=0; i<24; i++) { 
-        document.getElementById('square'+i).addEventListener('click', onClick);
-        document.getElementById('square'+i).style.backgroundColor = 'white'; 
+        document.getElementById("square"+i).addEventListener("click", onClick);
+        document.getElementById("square"+i).style.backgroundColor = "white"; 
+    }
+}
+
+function switchSquareColor(square) {
+    if (square.style.backgroundColor === "white") {
+        square.style.backgroundColor = "rgb(153, 170, 181)";
+    } else if (square.style.backgroundColor === "rgb(153, 170, 181)") {
+        square.style.backgroundColor = "white";
+    } else if (square.style.backgroundColor === "cyan") {
+        square.style.backgroundColor = "rgb(114, 137, 218)";
+    } else if (square.style.backgroundColor === "rgb(114, 137, 218)") {
+        square.style.backgroundColor = "cyan";
+    }
+}
+
+function switchColorMode() {
+    /* Swap text and color to change color mode */
+    var button = document.querySelector("#colorMode");
+    if (button.innerText === "Light Mode") {
+        document.body.style.backgroundColor= "#1abc9c";
+        button.innerText = "Dark Mode";
+        document.querySelector("#squarefree").style.background = "cyan";
+    } else {
+        document.body.style.backgroundColor= "#23272a";
+        button.innerText = "Light Mode";
+        document.querySelector("#squarefree").style.background = "rgb(114, 137, 218)";
+    }
+    for (var i=0; i < 24; i++) {
+        switchSquareColor(document.querySelector("#square" + i));
     }
 }
