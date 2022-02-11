@@ -7,6 +7,10 @@ body {
     align-items: center;
 }
 
+body.darkMode {
+  background: #23272a;
+}
+
 h1, p {
   font-family: 'Roboto', sans-serif; font-size: 20pt;
   font-weight: 600;
@@ -21,14 +25,20 @@ p a {
   color: #f1c40f;
 }
 
-#squarefree {
-  font-family: Helvetica;
-  margin: 0 auto;
-  background: cyan;
-  text-align: center;
-  font-weight: 600;
-  font-size: 15pt;
+body.darkMode #squarefree {
+  background: rgb(114, 137, 218);
 }
+
+if (square.style.backgroundColor === "") {
+  square.style.backgroundColor = "";
+} else if (square.style.backgroundColor === "rgb(153, 170, 181)") {
+  square.style.backgroundColor = "white";
+} else if (square.style.backgroundColor === "cyan") {
+  square.style.backgroundColor = "rgb(114, 137, 218)";
+} else if (square.style.backgroundColor === "rgb(114, 137, 218)") {
+  square.style.backgroundColor = "cyan";
+}
+
 
 #bingotable {
   margin: 0 auto;
@@ -51,10 +61,29 @@ th, td {
 
 th {
     height: 10%;
+    background: #9b59b6;
 }
 
-.orange {
-  background: #9b59b6;
+#squarefree {
+  background: cyan;
+  font-weight: 600;
+  font-size: 15pt;
+}
+
+td {
+  background: rgb(153, 170, 181);
+}
+
+body.darkMode td {
+  background: white;
+}
+
+td.clicked {
+  background: cyan;
+}
+
+body.darkMode td.clicked {
+  background: rgb(114, 137, 218);
 }
 
 .disable-select {
