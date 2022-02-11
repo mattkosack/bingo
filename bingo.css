@@ -5,62 +5,62 @@ body {
     align-content: center;
     justify-content: center;
     align-items: center;
-  }
-  
-  h1, p {
-    font-family: 'Roboto', sans-serif; font-size: 20pt;
-    font-weight: 600;
-    margin: 0 auto;
-    text-align: center;
-    padding: 30px;
-    color: white;
-  }
-  
-  p a {
-    text-decoration: none;
-    color: #f1c40f;
-  }
-  
-  #squarefree {
-    font-family: Helvetica;
-    margin: 0 auto;
-    background: cyan;
-    text-align: center;
-    font-weight: 600;
-    font-size: 15pt;
-  }
-  
-  #bingotable {
-    margin: 0 auto;
-    text-align: center;
-    width: 420px;
-    height: 420px;
-    border-collapse: collapse;
-    background: white;
-    table-layout: fixed;
-  }
-  
-  th, td {
-    font-family: Helvetica;
-    margin: 0 auto;
-    text-align: center;
-    border: 3px solid black;
-    width: 20%;
-    height: 18%;
-  }
+}
 
-  th {
-      height: 10%;
-  }
-  
-  .orange {
-    background: #9b59b6;
-  }
+h1, p {
+  font-family: 'Roboto', sans-serif; font-size: 20pt;
+  font-weight: 600;
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px;
+  color: white;
+}
 
-  .disable-select {
-    user-select: none; /* supported by Chrome and Opera */
-   -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-   -moz-user-select: none; /* Firefox */
-   -ms-user-select: none; /* Internet Explorer/Edge */
+p a {
+  text-decoration: none;
+  color: #f1c40f;
+}
+
+#squarefree {
+  font-family: Helvetica;
+  margin: 0 auto;
+  background: cyan;
+  text-align: center;
+  font-weight: 600;
+  font-size: 15pt;
+}
+
+#bingotable {
+  margin: 0 auto;
+  text-align: center;
+  width: 420px;
+  height: 420px;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+}
+
+th, td {
+  font-family: Helvetica;
+  margin: 0 auto;
+  text-align: center;
+  border: 3px solid black;
+  width: 20%;
+  height: 18%;
+}
+
+th {
+    height: 10%;
+}
+
+.orange {
+  background: #9b59b6;
+}
+
+.disable-select {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
