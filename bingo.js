@@ -15,6 +15,9 @@ let copy_phrases;
 let usedNums = new Array(phrases.length);
 let usedPhrases = new Array(phrases.length);
 let darkMode = false;
+if (document.cookie.split(";")[0].split("=")[1] === "true") {
+    darkMode = true;
+}
 
 function newCard() {
     copy_phrases = phrases.map((x) => x); 
@@ -68,6 +71,7 @@ function initEvents() {
         document.getElementById("square"+i).addEventListener("click", onClick);
         document.getElementById("square"+i).style.backgroundColor = color; 
     }
+    setColorModeColors(darkMode);
 }
 
 function switchSquareColor(square) {
@@ -82,21 +86,27 @@ function switchSquareColor(square) {
     }
 }
 
-function switchColorMode() {
-    /* Swap text and color to change color mode */
-    var button = document.querySelector("#colorMode");
-    if (darkMode) {
-        darkMode = false;
-        document.body.style.backgroundColor= "#1abc9c";
-        button.innerText = "Dark Mode";
-        document.querySelector("#squarefree").style.background = "cyan";
-    } else {
+function setColorModeColors(mode) {
+    let button = document.querySelector("#colorMode");
+    if (mode) {
         darkMode = true;
         document.body.style.backgroundColor= "#23272a";
         button.innerText = "Light Mode";
         document.querySelector("#squarefree").style.background = "rgb(114, 137, 218)";
     }
+    else {
+        darkMode = false;
+        document.body.style.backgroundColor= "#1abc9c";
+        button.innerText = "Dark Mode";
+        document.querySelector("#squarefree").style.background = "cyan";
+    }
+}
+
+function switchColorMode() {
+    /* Swap text and color to change color mode */
+    setColorModeColors(!darkMode);
     for (var i=0; i < 24; i++) {
         switchSquareColor(document.querySelector("#square" + i));
     }
+   document.cookie = "darkMode=" + darkMode + "; SameSite=None; Secure";
 }

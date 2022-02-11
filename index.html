@@ -1,24 +1,20 @@
 <html>
 
 <head>
-  <link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
-<meta charset="utf-8" />
-
-<title>Bingo</title>
-
-<link rel="stylesheet" type="text/css" href="bingo.css" />
-
-<script type="text/javascript" src="bingo.js"></script>
-
+  	<link href='https://fonts.googleapis.com/css?family=Cambay' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="bingo.css" />
+	<script type="text/javascript" src="bingo.js"></script>
+	<meta charset="utf-8" />
+	<title>Bingo</title>
 </head>
 
 <body onload="newCard()">
-
 	<div id="container">
     <div id="header">
       <h1>Create a Bingo Card</h1>
     </div>
+	
 	<div id="content" class="disable-select">
 		<table id="bingotable">
 			<tr>
@@ -66,13 +62,11 @@
 		</table>
 	</div>
 	
-<p>
-	<a href="#" onclick="anotherCard()">Click here</a> to create a new card
-	<br/>
-	<button id="colorMode" onclick="switchColorMode()">Dark Mode</button>
-</p>
+	<p>
+		<a href="#" onclick="anotherCard()">Click here</a> to create a new card
+		<br/>
+		<button id="colorMode" onclick="switchColorMode()">Dark Mode</button>
+	</p>
 
 </body>
-
 </html>
-
