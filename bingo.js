@@ -11,49 +11,22 @@ let phrases = [
         "Multiple Ignored Texts", "Canvas Edits", "1Password"
     ];
 
-let copy_phrases;
-let usedNums = new Array(phrases.length);
-let usedPhrases = new Array(phrases.length);
-
 let darkMode = window.localStorage.getItem("darkMode") === "true";
 
 function newCard() {
-    copy_phrases = phrases.map((x) => x); 
-    for (let i = 0; i < 24; i++) { setSquare(i); } 
-}
-
-function setSquare(thisSquare) {
-	let currSquare = "square"+thisSquare;
-	let newNum, newPhrase;
-	
-	do {
-        newPhrase = getNewPhrase()
-	} while (usedNums[newNum]);
-	
-    usedPhrases[newNum] = true;
-	document.getElementById(currSquare).innerHTML = newPhrase;
-    document.getElementById(currSquare).classList.remove("clicked");
-}
-
-function getNewPhrase() {
-    let num = Math.floor(Math.random() * copy_phrases.length)
-    let phrase = copy_phrases[num];
-    copy_phrases.splice(num, 1);
-    return phrase; 
-}
-
-function anotherCard() {
-	for (let i = 1; i < usedNums.length; i++) { usedNums[i] = false; }
-	newCard();
-}
-
-function onClick(e) {
-    e.target.classList.toggle("clicked");
+    let shuffled = phrases.map(value => ({ value, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
+    for (let i = 0; i < 24; i++) {
+        let elem = document.getElementById("square"+i);
+        elem.innerHTML = shuffled[i];
+        elem.classList.remove("clicked");
+    }
 }
 
 function initEvents() {
     for (let i = 0; i < 24; i++) {
-        document.getElementById("square"+i).addEventListener("click", onClick);
+        document.getElementById("square"+i).addEventListener("click", (e) => {
+            e.target.classList.toggle("clicked");
+        });
     }
     setColorModeColors(darkMode);
 }
