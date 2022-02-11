@@ -20,9 +20,24 @@ h1, p {
   color: white;
 }
 
+body.darkMode h1, body.darkMode p {
+color: rgb(153, 170, 181);
+}
+
 p a {
   text-decoration: none;
   color: #f1c40f;
+}
+
+button {
+  font-family: 'Roboto', sans-serif; font-size: 10pt;
+  font-weight: 600;
+  text-align: center;
+  color: black;
+}
+
+body.darkMode button {
+  background: rgb(153, 170, 181);
 }
 
 #bingotable {
@@ -60,11 +75,11 @@ body.darkMode #squarefree {
 }
 
 td {
-  background: rgb(153, 170, 181);
+  background: white;
 }
 
 body.darkMode td {
-  background: white;
+  background: rgb(153, 170, 181);
 }
 
 td.clicked {
