@@ -14,9 +14,35 @@ let phrases = [
 let copy_phrases;
 let usedNums = new Array(phrases.length);
 let usedPhrases = new Array(phrases.length);
+
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires;
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return false;
+}
+
 let darkMode = false;
-if (document.cookie.split(";")[0].split("=")[1] === "true") {
+if (getCookie("darkMode") === "true") {
     darkMode = true;
+    console.log(getCookie("darkMode"));
+    console.log(document.cookie);
 }
 
 function newCard() {
@@ -108,5 +134,5 @@ function switchColorMode() {
     for (var i=0; i < 24; i++) {
         switchSquareColor(document.querySelector("#square" + i));
     }
-   document.cookie = "darkMode=" + darkMode + "; SameSite=None; Secure";
+    setCookie("darkMode", darkMode.toString(), 31);
 }
