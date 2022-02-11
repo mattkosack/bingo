@@ -7,8 +7,9 @@ let phrases = [
         "Hiking", "Over Time", "Says he's a Geek", "Github Workflow",
         "REST API", "Profession- alism","Beer","Tea", "HTTP is Just Text",
         "gitkeeper", "'word' instead of swear", "dotenv/ .env", "thing <b>is</b> thing",
-        "auto-magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
-        "Multiple Ignored Texts", "Canvas Edits", "1Password"
+        "Auto- magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
+        "Multiple Ignored Texts", "Canvas Edits", "1Password", "Vague Question", "Unfunny Joke",
+        "Didn't Say What he Wanted"
     ];
 
 let darkMode = window.localStorage.getItem("darkMode") === "true";
