@@ -28,10 +28,10 @@ function getCookie(cname) {
     let ca = decodedCookie.split(';');
     for(let i = 0; i <ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == ' ') {
+      while (c.charAt(0) === ' ') {
         c = c.substring(1);
       }
-      if (c.indexOf(name) == 0) {
+      if (c.indexOf(name) === 0) {
         return c.substring(name.length, c.length);
       }
     }
@@ -41,19 +41,17 @@ function getCookie(cname) {
 let darkMode = false;
 if (getCookie("darkMode") === "true") {
     darkMode = true;
-    console.log(getCookie("darkMode"));
-    console.log(document.cookie);
 }
 
 function newCard() {
     copy_phrases = phrases.map((x) => x); 
-    for(var i=0; i < 24; i++) { setSquare(i); } 
+    for(let i = 0; i < 24; i++) { setSquare(i); } 
     initEvents();
 }
 
 function setSquare(thisSquare) {
-	var currSquare = "square"+thisSquare;
-	var newNum, newPhrase;
+	let currSquare = "square"+thisSquare;
+	let newNum, newPhrase;
 	
 	do {
         newPhrase = getNewPhrase()
@@ -72,7 +70,7 @@ function getNewPhrase() {
 }
 
 function anotherCard() {
-	for(var i=1; i < usedNums.length; i++) { usedNums[i] = false; }
+	for(let i = 1; i < usedNums.length; i++) { usedNums[i] = false; }
 	newCard();
 }
 
@@ -89,11 +87,11 @@ function onClick(e) {
 }
 
 function initEvents() {
-    var color = "rgb(153, 170, 181)";
+    let color = "rgb(153, 170, 181)";
     if (!darkMode) {
         color = "white";
     }
-    for (let i=0; i < 24; i++) { 
+    for (let i = 0; i < 24; i++) { 
         document.getElementById("square"+i).addEventListener("click", onClick);
         document.getElementById("square"+i).style.backgroundColor = color; 
     }
@@ -119,8 +117,7 @@ function setColorModeColors(mode) {
         document.body.style.backgroundColor= "#23272a";
         button.innerText = "Light Mode";
         document.querySelector("#squarefree").style.background = "rgb(114, 137, 218)";
-    }
-    else {
+    } else {
         darkMode = false;
         document.body.style.backgroundColor= "#1abc9c";
         button.innerText = "Dark Mode";
@@ -131,7 +128,7 @@ function setColorModeColors(mode) {
 function switchColorMode() {
     /* Swap text and color to change color mode */
     setColorModeColors(!darkMode);
-    for (var i=0; i < 24; i++) {
+    for (let i = 0; i < 24; i++) {
         switchSquareColor(document.querySelector("#square" + i));
     }
     setCookie("darkMode", darkMode.toString(), 31);
