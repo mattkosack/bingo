@@ -14,7 +14,36 @@ let phrases = [
 let copy_phrases;
 let usedNums = new Array(phrases.length);
 let usedPhrases = new Array(phrases.length);
+
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires;
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return false;
+}
+
 let darkMode = false;
+if (getCookie("darkMode") === "true") {
+    darkMode = true;
+    console.log(getCookie("darkMode"));
+    console.log(document.cookie);
+}
 
 function newCard() {
     copy_phrases = phrases.map((x) => x); 
@@ -68,6 +97,7 @@ function initEvents() {
         document.getElementById("square"+i).addEventListener("click", onClick);
         document.getElementById("square"+i).style.backgroundColor = color; 
     }
+    setColorModeColors(darkMode);
 }
 
 function switchSquareColor(square) {
@@ -82,21 +112,27 @@ function switchSquareColor(square) {
     }
 }
 
-function switchColorMode() {
-    /* Swap text and color to change color mode */
-    var button = document.querySelector("#colorMode");
-    if (darkMode) {
-        darkMode = false;
-        document.body.style.backgroundColor= "#1abc9c";
-        button.innerText = "Dark Mode";
-        document.querySelector("#squarefree").style.background = "cyan";
-    } else {
+function setColorModeColors(mode) {
+    let button = document.querySelector("#colorMode");
+    if (mode) {
         darkMode = true;
         document.body.style.backgroundColor= "#23272a";
         button.innerText = "Light Mode";
         document.querySelector("#squarefree").style.background = "rgb(114, 137, 218)";
     }
+    else {
+        darkMode = false;
+        document.body.style.backgroundColor= "#1abc9c";
+        button.innerText = "Dark Mode";
+        document.querySelector("#squarefree").style.background = "cyan";
+    }
+}
+
+function switchColorMode() {
+    /* Swap text and color to change color mode */
+    setColorModeColors(!darkMode);
     for (var i=0; i < 24; i++) {
         switchSquareColor(document.querySelector("#square" + i));
     }
+    setCookie("darkMode", darkMode.toString(), 31);
 }
