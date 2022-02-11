@@ -29,17 +29,6 @@ body.darkMode #squarefree {
   background: rgb(114, 137, 218);
 }
 
-if (square.style.backgroundColor === "") {
-  square.style.backgroundColor = "";
-} else if (square.style.backgroundColor === "rgb(153, 170, 181)") {
-  square.style.backgroundColor = "white";
-} else if (square.style.backgroundColor === "cyan") {
-  square.style.backgroundColor = "rgb(114, 137, 218)";
-} else if (square.style.backgroundColor === "rgb(114, 137, 218)") {
-  square.style.backgroundColor = "cyan";
-}
-
-
 #bingotable {
   margin: 0 auto;
   text-align: center;
