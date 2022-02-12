@@ -14,6 +14,7 @@ let phrases = [
 
 let isDarkMode = window.localStorage.getItem("darkMode") === "true";
 let hasBingo = false, cardSize = 5, card = "";
+let confettiTrig = false
 setupCard();
 
 /**
@@ -60,6 +61,12 @@ function reseed() {
      * Creates a new seed for random number generation.
      */
     window.location.hash = Math.random().toString();
+}
+
+function confettiTrigger(){
+    confettiTrig = !confettiTrig
+    if (confettiTrig) {startConfetti();}
+    else { stopConfetti(); } 
 }
 
 function clearSquareSelection() {
