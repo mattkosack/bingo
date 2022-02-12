@@ -259,6 +259,8 @@ function playSound() {
     // Passing in file
     audioSource.buffer = audioBuffer;
     audioSource.connect(gainNode);
+
+    audioSource.loop = true;
     // Start playing
     gainNode.connect(context.destination);
     // Volume, 0 is mute
