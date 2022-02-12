@@ -1,4 +1,6 @@
 // Source: https://www.iprodev.com/confetti-animation-javascript/
+// Modified to be able to be started and stopped at will.
+
 let retina = window.devicePixelRatio,
   // Math shorthands
   PI = Math.PI,
@@ -223,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
     this.oscillationSpeed = (random() * 2 + 2);
     this.oscillationDistance = (random() * 40 + 40);
     this.ySpeed = (random() * 40 + 80);
-    for (var i = 0; i < this.particleCount; i++) {
+    for (let i = 0; i < this.particleCount; i++) {
       this.particles[i] = new EulerMass(_x, _y - i * this.particleDist, this.particleMass, this.particleDrag);
     }
     this.Update = function(_dt) {
@@ -270,12 +272,12 @@ document.addEventListener("DOMContentLoaded", function() {
       this.frontColor = colors[ci][0];
       this.backColor = colors[ci][1];
       this.particles = new Array();
-      for (var i = 0; i < this.particleCount; i++) {
+      for (let i = 0; i < this.particleCount; i++) {
         this.particles[i] = new EulerMass(this.position.x, this.position.y - i * this.particleDist, this.particleMass, this.particleDrag);
       }
     }
     this.Draw = function(_g) {
-      for (var i = 0; i < this.particleCount - 1; i++) {
+      for (let i = 0; i < this.particleCount - 1; i++) {
         let p0 = new Vector2(this.particles[i].position.x + this.xOff, this.particles[i].position.y + this.yOff);
         let p1 = new Vector2(this.particles[i + 1].position.x + this.xOff, this.particles[i + 1].position.y + this.yOff);
         if (this.Side(this.particles[i].position.x, this.particles[i].position.y, this.particles[i + 1].position.x, this.particles[i + 1].position.y, p1.x, p1.y) < 0) {

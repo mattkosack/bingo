@@ -12,15 +12,9 @@ let phrases = [
         "Didn't Say What he Wanted"
     ];
 
-let darkMode = window.localStorage.getItem("darkMode") === "true";
-// Create board and intialize values; board keeps track of number of selected values in rows, columns, diagonals 
-let hasBingo = false, boardSize = 5;
-let board = [new Array(boardSize).fill(0), new Array(boardSize).fill(0), new Array(2).fill(0)];
-// Free space
-board[0][Math.floor(boardSize / 2)] = 1; // In row 3
-board[1][Math.floor(boardSize / 2)] = 1; // In column 3
-board[2][0] = 1; // In diagonal, from top left
-board[2][1] = 1; // In diagonal, from top right
+let isDarkMode = window.localStorage.getItem("darkMode") === "true";
+let hasBingo = false, boardSize = 5, board = "";
+setupBoard();
 
 /**
  * Get a random number generator, optionally based on a predetermined seed. The
@@ -62,10 +56,16 @@ function random_generator(seed) {
 }
 
 function reseed() {
+    /**
+     * Creates a new seed for random number generation.
+     */
     window.location.hash = Math.random().toString();
 }
 
 function newCard() {
+    /**
+     * Creates a new bingo card with values that are randomaly selected from a set of available options.
+     */
     if (!window.location.hash) { reseed(); }
     let rand = random_generator(window.location.hash);
     let shuffled = phrases.map(value => ({ value, sort: rand() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
@@ -77,16 +77,34 @@ function newCard() {
 }
 
 function initEvents() {
-    for (let i = 0; i < 24; i++) {
+    /**
+     * Performs initialization. This includes adding click listeners to all squares (except free space) and setting the color mode.
+     * The click listeners will toggle whether the square is clicked or not (changing its appearance) and additionally check for bingo
+     * and perform all actions associated with getting a bingo.
+     */
+    for (let i = 0; i < boardSize*boardSize - 1; i++) {
         document.getElementById("square"+i).addEventListener("click", (e) => {
             e.target.classList.toggle("clicked");
             let isSelected = Array.from(e.target.classList).indexOf("clicked") !== -1;
-            if (i > Math.floor(boardSize*boardSize/2) - 1) { ++i; } // account for free space
-            tallyClickedSquares(i, isSelected ? 1 : -1);
+            let pos = (i > Math.floor(boardSize*boardSize/2) - 1) ? i+1 : i; // account for free space
+            tallyClickedSquares(pos, isSelected ? 1 : -1);
             checkForBingo(isSelected);
         });
     }
-    setColorModeColors(darkMode);
+    setColorModeColors(isDarkMode);
+}
+
+function setupBoard() {
+    /**
+     * Create board and intialize values. The board keeps track of the number
+     * of selected values in each row [0], column [1], and diagonal [2].
+     */
+    board = [new Array(boardSize).fill(0), new Array(boardSize).fill(0), new Array(2).fill(0)];
+    // Add free space to tally
+    board[0][Math.floor(boardSize / 2)] = 1; // In row 3
+    board[1][Math.floor(boardSize / 2)] = 1; // In column 3
+    board[2][0] = 1; // In diagonal, from top left
+    board[2][1] = 1; // In diagonal, from top right
 }
 
 function tallyClickedSquares(pos, val) {
@@ -100,12 +118,15 @@ function tallyClickedSquares(pos, val) {
     board[1][col] += val;
     if (row === col) { board[2][0] += val; }
     else if (row + col === 4) { board[2][1] += val; }
-    console.log(board[0][row], board[1][col], board[2])
 }
 
 function checkForBingo(isSelected) {
-    /* Checks for bingo and starts/stops confetti animation accordingly.
-       Toggles hasBingo if there is a bingo or not. */
+    /**
+     * Checks for bingo and starts or stops confetti animation accordingly.
+     * Toggles hasBingo if there is a bingo or not.
+     * @param isSelected Whether or not the clicked piece is selected or not.
+     * @return Returns true or false based on whether there is a bingo or not.
+     */
     let hadBingo = hasBingo;
     hasBingo = checkHorizontalVerticalBingo() || checkDiagonalBingo();
     if (hasBingo !== hadBingo) {
@@ -116,9 +137,13 @@ function checkForBingo(isSelected) {
 }
 
 function checkHorizontalVerticalBingo() {
-    for (var i=0; i < 2; i++) {
+    /** 
+     * Checks for a horizontal or vertical bingo.
+     * @return Returns true or false based on whether there is a bingo or not.
+     */
+    for (let i=0; i < 2; i++) {
         let arr = board[i];
-        for (var j=0; j < arr.length; j++) {
+        for (let j=0; j < arr.length; j++) {
             if (arr[j] === boardSize) { return true; }
         }
     }
@@ -126,13 +151,21 @@ function checkHorizontalVerticalBingo() {
 }
 
 function checkDiagonalBingo() {
+    /** 
+     * Checks for a diagonal bingo.
+     * @return Returns true or false based on whether there is a bingo or not.
+     */
     return board[2][0] === boardSize || board[2][1] === boardSize;
 }
 
 function setColorModeColors(mode) {
+    /**
+     * Switches to the specified color mode.
+     * @param mode A boolean that specifies dark mode if true and light mode if false.
+     */
     document.getElementById("colorMode").innerText = mode ? "Light Mode" : "Dark Mode";
-    darkMode = mode;
-    if (darkMode) {
+    isDarkMode = mode;
+    if (isDarkMode) {
         document.body.classList.add('darkMode');
     }
     else {
@@ -141,7 +174,9 @@ function setColorModeColors(mode) {
 }
 
 function switchColorMode() {
-    /* Swap text and color to change color mode */
-    setColorModeColors(!darkMode);
-    window.localStorage.setItem('darkMode', darkMode.toString());
+    /**
+     * Swap text and color to change color mode
+     */
+    setColorModeColors(!isDarkMode);
+    window.localStorage.setItem('darkMode', isDarkMode.toString());
 }
