@@ -15,6 +15,14 @@ let phrases = [
 let isDarkMode = window.localStorage.getItem("darkMode") === "true";
 let hasBingo = false, cardSize = 5, card = "";
 let confettiTrig = false
+
+// Audio Context utils
+let context;
+let gainNode;
+let audioBuffer = null;
+let audioSource;
+let audioPlaying = false;
+
 setupCard();
 
 /**
@@ -128,6 +136,11 @@ function initEvents() {
         });
     }
     setColorModeColors(isDarkMode);
+    
+    let AudioContext = window.AudioContext || window.webkitAudioContext;
+    context = new AudioContext();
+    gainNode = context.createGain();
+    loadSound()
 }
 
 function setupCard() {
@@ -215,4 +228,56 @@ function switchColorMode() {
      */
     setColorModeColors(!isDarkMode);
     window.localStorage.setItem('darkMode', isDarkMode.toString());
+}
+
+/**
+ * Load sound into the created audio context.
+ */
+function loadSound() {
+    // Set the audio file's URL
+    let audioURL = 'booamf.mp3';
+
+    // Create a new request
+    let request = new XMLHttpRequest();
+    request.open("GET", audioURL, true);
+    request.responseType= 'arraybuffer';
+    request.onload = function () {
+        // Take the audio from http request and decode it in an audio buffer
+        context.decodeAudioData(request.response, function (buffer) {
+            audioBuffer = buffer;
+        });
+    };
+    request.send();
+}
+
+/**
+ * Play the music file.
+ */
+function playSound() {
+    // Creating source node
+    audioSource = context.createBufferSource();
+    // Passing in file
+    audioSource.buffer = audioBuffer;
+    audioSource.connect(gainNode);
+    // Start playing
+    gainNode.connect(context.destination);
+    // Volume, 0 is mute
+    gainNode.gain.setValueAtTime(0.5, context.currentTime);
+    audioSource.start(0);
+}
+
+/**
+ * Change whether or not the audio is playing.
+ */
+function changeAudioStatus() {
+    window.localStorage.setItem('Music', audioPlaying.toString());
+    document.getElementById("Music").innerText = audioPlaying ? "Music On" : "Music Off";
+    if (audioPlaying) {
+        // Stop the sound
+        audioPlaying = false;
+        audioSource.stop(0);
+    } else {
+        audioPlaying = true;
+        playSound();
+    }
 }
