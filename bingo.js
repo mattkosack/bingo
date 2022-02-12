@@ -6,7 +6,7 @@ let phrases = [
         "Send Me An Email", "Long Plickers","Uncle Bob",
         "Hiking", "Over Time", "Says he's a Geek", "Github Workflow",
         "REST API", "Profession- alism","Beer","Tea", "HTTP is Just Text",
-        "gitkeeper", "'word' instead of swear", "dotenv/ .env", "thing <b>is</b> thing",
+        "gitkeeper", "'Word' Instead of Swear", "dotenv/ .env", "Thing is Thing",
         "Auto- magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
         "Multiple Ignored Texts", "Canvas Edits", "1Password", "Vague Question", "Unfunny Joke",
         "Didn't Say What he Wanted"
@@ -74,6 +74,7 @@ function newCard() {
         elem.innerHTML = shuffled[i];
         elem.classList.remove("clicked");
     }
+    setupBoard();
 }
 
 function initEvents() {
