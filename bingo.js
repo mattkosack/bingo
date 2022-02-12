@@ -13,7 +13,14 @@ let phrases = [
     ];
 
 let darkMode = window.localStorage.getItem("darkMode") === "true";
-
+// Create board and intialize values; board keeps track of number of selected values in rows, columns, diagonals 
+let hasBingo = false, boardSize = 5;
+let board = [new Array(boardSize).fill(0), new Array(boardSize).fill(0), new Array(2).fill(0)];
+// Free space
+board[0][Math.floor(boardSize / 2)] = 1; // In row 3
+board[1][Math.floor(boardSize / 2)] = 1; // In column 3
+board[2][0] = 1; // In diagonal, from top left
+board[2][1] = 1; // In diagonal, from top right
 
 /**
  * Get a random number generator, optionally based on a predetermined seed. The
@@ -73,9 +80,53 @@ function initEvents() {
     for (let i = 0; i < 24; i++) {
         document.getElementById("square"+i).addEventListener("click", (e) => {
             e.target.classList.toggle("clicked");
+            let isSelected = Array.from(e.target.classList).indexOf("clicked") !== -1;
+            if (i > Math.floor(boardSize*boardSize/2) - 1) { ++i; } // account for free space
+            tallyClickedSquares(i, isSelected ? 1 : -1);
+            checkForBingo(isSelected);
         });
     }
     setColorModeColors(darkMode);
+}
+
+function tallyClickedSquares(pos, val) {
+    /**
+     * Tallies up how many squares are clicked in each row, column, diagonal
+     * @param pos location of square
+     * @param val value to be added
+     */
+    let col = pos % boardSize, row = Math.floor(pos / boardSize);
+    board[0][row] += val;
+    board[1][col] += val;
+    if (row === col) { board[2][0] += val; }
+    else if (row + col === 4) { board[2][1] += val; }
+    console.log(board[0][row], board[1][col], board[2])
+}
+
+function checkForBingo(isSelected) {
+    /* Checks for bingo and starts/stops confetti animation accordingly.
+       Toggles hasBingo if there is a bingo or not. */
+    let hadBingo = hasBingo;
+    hasBingo = checkHorizontalVerticalBingo() || checkDiagonalBingo();
+    if (hasBingo !== hadBingo) {
+        if (hasBingo) { startConfetti(); }
+        else { stopConfetti(); }
+    }
+    return hasBingo;
+}
+
+function checkHorizontalVerticalBingo() {
+    for (var i=0; i < 2; i++) {
+        let arr = board[i];
+        for (var j=0; j < arr.length; j++) {
+            if (arr[j] === boardSize) { return true; }
+        }
+    }
+    return false;
+}
+
+function checkDiagonalBingo() {
+    return board[2][0] === boardSize || board[2][1] === boardSize;
 }
 
 function setColorModeColors(mode) {
