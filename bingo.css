@@ -97,3 +97,14 @@ body.darkMode td.clicked {
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
+
+.fullscreen-behind {
+  position:absolute;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  height:100%;
+  width:100%;
+  z-index: -1;
+}
