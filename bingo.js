@@ -14,14 +14,15 @@ let phrases = [
 
 let isDarkMode = window.localStorage.getItem("darkMode") === "true";
 let hasBingo = false, cardSize = 5, card = "";
-let confettiTrig = false
+let confettiTrig = false;
+let imageExists = false;
 
 // Audio Context utils
-let context;
-let gainNode;
-let audioBuffer = null;
-let audioSource;
-let audioPlaying = false;
+let context,
+    gainNode,
+    audioBuffer = null,
+    audioSource,
+    audioPlaying = false;
 
 setupCard();
 
@@ -64,10 +65,10 @@ function random_generator(seed) {
     return rand;
 }
 
+/**
+ * Creates a new seed for random number generation.
+ */
 function reseed() {
-    /**
-     * Creates a new seed for random number generation.
-     */
     window.location.hash = Math.random().toString();
 }
 
@@ -77,19 +78,19 @@ function confettiTrigger(){
     else { stopConfetti(); } 
 }
 
+/**
+ * Clear visible selection of squares.
+ */
 function clearSquareSelection() {
-    /**
-     * Clear visible selection of squares.
-     */
     for (let i = 0; i < cardSize*cardSize - 1; i++) {
         document.getElementById("square"+i).classList.remove("clicked");
     }
 }
 
+/**
+ * Clear internal data structure of square selection.
+ */
 function clearInternalSquareSelection() {
-    /**
-     * Clear internal data structure of square selection.
-     */
     if (hasBingo) {
         stopConfetti();
         hasBingo = false;
@@ -97,18 +98,18 @@ function clearInternalSquareSelection() {
     setupCard();
 }
 
+/**
+ * Clear bingo card by removing visible selection and internal data structure selection.
+ */
 function clearCard() {
-    /**
-     * Clear bingo card by removing visible selection and internal data structure selection.
-     */
     clearSquareSelection();
     clearInternalSquareSelection();
 }
 
+/**
+ * Creates a new bingo card with values that are randomly selected from a set of available options.
+ */
 function newCard() {
-    /**
-     * Creates a new bingo card with values that are randomly selected from a set of available options.
-     */
     if (!window.location.hash) { reseed(); }
     let rand = random_generator(window.location.hash);
     let shuffled = phrases.map(value => ({ value, sort: rand() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
@@ -120,12 +121,12 @@ function newCard() {
     clearInternalSquareSelection();
 }
 
+/**
+ * Performs initialization. This includes adding click listeners to all squares (except free space) and setting the color mode.
+ * The click listeners will toggle whether the square is clicked or not (changing its appearance) and additionally check for bingo
+ * and perform all actions associated with getting a bingo.
+ */
 function initEvents() {
-    /**
-     * Performs initialization. This includes adding click listeners to all squares (except free space) and setting the color mode.
-     * The click listeners will toggle whether the square is clicked or not (changing its appearance) and additionally check for bingo
-     * and perform all actions associated with getting a bingo.
-     */
     for (let i = 0; i < cardSize*cardSize - 1; i++) {
         document.getElementById("square"+i).addEventListener("click", (e) => {
             e.target.classList.toggle("clicked");
@@ -143,11 +144,11 @@ function initEvents() {
     loadSound()
 }
 
+/**
+ * Create card and intialize values. The card keeps track of the number
+ * of selected values in each row [0], column [1], and diagonal [2].
+ */
 function setupCard() {
-    /**
-     * Create card and intialize values. The card keeps track of the number
-     * of selected values in each row [0], column [1], and diagonal [2].
-     */
     card = [new Array(cardSize).fill(0), new Array(cardSize).fill(0), new Array(2).fill(0)];
     // Add free space to tally
     card[0][Math.floor(cardSize / 2)] = 1; // In row 3
@@ -156,12 +157,12 @@ function setupCard() {
     card[2][1] = 1; // In diagonal, from top right
 }
 
+/**
+ * Tallies up how many squares are clicked in each row, column, diagonal
+ * @param pos location of square
+ * @param val value to be added
+ */
 function tallyClickedSquares(pos, val) {
-    /**
-     * Tallies up how many squares are clicked in each row, column, diagonal
-     * @param pos location of square
-     * @param val value to be added
-     */
     let col = pos % cardSize, row = Math.floor(pos / cardSize);
     card[0][row] += val;
     card[1][col] += val;
@@ -169,13 +170,13 @@ function tallyClickedSquares(pos, val) {
     else if (row + col === 4) { card[2][1] += val; }
 }
 
+/**
+ * Checks for bingo and starts or stops confetti animation accordingly.
+ * Toggles hasBingo if there is a bingo or not.
+ * @param isSelected Whether or not the clicked piece is selected or not.
+ * @returns true or false based on whether there is a bingo or not.
+ */
 function checkForBingo(isSelected) {
-    /**
-     * Checks for bingo and starts or stops confetti animation accordingly.
-     * Toggles hasBingo if there is a bingo or not.
-     * @param isSelected Whether or not the clicked piece is selected or not.
-     * @return Returns true or false based on whether there is a bingo or not.
-     */
     let hadBingo = hasBingo;
     hasBingo = checkHorizontalVerticalBingo() || checkDiagonalBingo();
     if (hasBingo !== hadBingo) {
@@ -185,11 +186,11 @@ function checkForBingo(isSelected) {
     return hasBingo;
 }
 
+/** 
+ * Checks for a horizontal or vertical bingo.
+ * @returns true or false based on whether there is a bingo or not.
+ */
 function checkHorizontalVerticalBingo() {
-    /** 
-     * Checks for a horizontal or vertical bingo.
-     * @return Returns true or false based on whether there is a bingo or not.
-     */
     for (let i=0; i < 2; i++) {
         let arr = card[i];
         for (let j=0; j < arr.length; j++) {
@@ -199,19 +200,19 @@ function checkHorizontalVerticalBingo() {
     return false;
 }
 
+/** 
+ * Checks for a diagonal bingo.
+ * @returns true or false based on whether there is a bingo or not.
+ */
 function checkDiagonalBingo() {
-    /** 
-     * Checks for a diagonal bingo.
-     * @return Returns true or false based on whether there is a bingo or not.
-     */
     return card[2][0] === cardSize || card[2][1] === cardSize;
 }
 
+/**
+ * Switches to the specified color mode.
+ * @param mode A boolean that specifies dark mode if true and light mode if false.
+ */
 function setColorModeColors(mode) {
-    /**
-     * Switches to the specified color mode.
-     * @param mode A boolean that specifies dark mode if true and light mode if false.
-     */
     document.getElementById("colorMode").innerText = mode ? "Light Mode" : "Dark Mode";
     isDarkMode = mode;
     if (isDarkMode) {
@@ -222,10 +223,10 @@ function setColorModeColors(mode) {
     }
 }
 
+/**
+ * Swap text and color to change color mode
+ */
 function switchColorMode() {
-    /**
-     * Swap text and color to change color mode
-     */
     setColorModeColors(!isDarkMode);
     window.localStorage.setItem('darkMode', isDarkMode.toString());
 }
@@ -282,4 +283,30 @@ function changeAudioStatus() {
         audioPlaying = true;
         playSound();
     }
+}
+
+/**
+ * Converts HTML into an image and appends it to the page.
+ * @param id The id of the element to be converted.
+ * @param img_id The id of the new image created.
+ * @param put_id The id of the element where the image is placed.
+ */
+function createImage(id, img_id, put_id) {
+    html2canvas(document.querySelector(id)).then(canvas => {
+        canvas.id = img_id;
+        document.querySelector(put_id).appendChild(canvas);
+    });
+}
+
+/**
+ * Creates an image of the card or removes it if it already exists.
+ */
+ function htmlImage() {
+    document.getElementById("imgButton").innerText = imageExists ? "Create Image" : "Remove Image";
+    if (imageExists) {
+        document.getElementById("#image").remove();
+    } else {
+        createImage("#bingotable", "#image", "#bottom");
+    }
+    imageExists = !imageExists;
 }
