@@ -6,6 +6,7 @@
   	<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="bingo.css" />
 	<link rel="icon" type="image/jpeg" href="/coleman.jpg"/>
+	<script type="text/javascript" src="html2canvas.min.js"></script>
 	<script type="text/javascript" src="confetti.js"></script>
 	<script type="text/javascript" src="bingo.js"></script>
 	<meta charset="utf-8" />
@@ -66,14 +67,18 @@
 		</table>
 	</div>
 	
-	<p>
+	<p id="bottom">
 		<a href="#" onclick="reseed(); newCard(); return false;">Click here</a> to create a new card
 		<br/>
 		<button id="clearCard" onclick="clearCard()">Clear Card</button>
-		<button id="colorMode" onclick="switchColorMode()">Dark Mode</button> 
+		<button id="colorMode" onclick="switchColorMode()">Dark Mode</button>
 		<br/>
 		<button id="confettiTime" onclick="confettiTrigger()">Confetti Time</button>
 		<button id="Music" onclick="changeAudioStatus()">Music On</button>
+		<br/>
+		<button id="imgButton" onclick="htmlImage()">Create Image</button>
+		<br/> 
+		<br/> 
 	</p>
 
 </body>
