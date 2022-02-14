@@ -310,3 +310,25 @@ function createImage(id, img_id, put_id) {
     }
     imageExists = !imageExists;
 }
+
+/**
+ * Converts HTML into an image and copies it into clipboard.
+ * Note: To use on Firefox, must enable ClipboardItem. about:config > dom.events.asyncClipboard.clipbaordItem > true
+ * @param id The id of the element to be copied.
+ */
+function copyImageToClipboard(id) {
+    html2canvas(document.querySelector(id)).then(canvas => {
+        canvas.toBlob(function (blob) {
+            let data = [new ClipboardItem({ [blob.type]: blob })];
+            if (navigator.clipboard) {
+                navigator.clipboard.write(data).then(function () {
+                    console.log('Copied image to clipboard')
+                }, function (err) {
+                    console.log('Error copying image to clipboard')
+                });
+            } else {
+                console.log('Browser does not fully support Clipboard API')
+            }
+        }, 'image/png');
+    });
+}
