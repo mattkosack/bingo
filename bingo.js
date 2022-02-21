@@ -9,7 +9,7 @@ let phrases = [
         "gitkeeper", "'Word' Instead of Swear", "dotenv/ .env", "Thing is Thing",
         "Auto- magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
         "Multiple Ignored Texts", "Canvas Edits", "1Password", "Vague Question", "Unfunny Joke",
-        "Didn't Say What he Wanted"
+        "Didn't Say What he Wanted", "Docker"
     ];
 
 let isDarkMode = window.localStorage.getItem("darkMode") === "true";
