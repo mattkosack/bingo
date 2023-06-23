@@ -1,21 +1,23 @@
 let phrases = [
-        "Green to Green", "Jeep Talk", "The Hands", 
-        "Learning Cycle", "Unnoticed Typo", "Shouting", 
-        "Comma", "Poor Spelling", "Talk About Weekend", "Public Shaming",
-        "Condes- cension", "You Type Slow", "Abstraction", 
-        "Send Me An Email", "Long Plickers","Uncle Bob",
-        "Hiking", "Over Time", "Says he's a Geek", "Github Workflow",
-        "REST API", "Profession- alism","Beer","Tea", "HTTP is Just Text",
-        "gitkeeper", "'Word' Instead of Swear", "dotenv/ .env", "Thing is Thing",
-        "Auto- magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
-        "Multiple Ignored Texts", "Canvas Edits", "1Password", "Vague Question", "Unfunny Joke",
-        "Didn't Say What he Wanted", "Docker"
-    ];
+    "Green to Green", "Jeep Talk", "The Hands",
+    "Learning Cycle", "Unnoticed Typo", "Shouting",
+    "Comma", "Poor Spelling", "Talk About Weekend", "Public Shaming",
+    "Condes- cension", "You Type Slow", "Abstraction",
+    "Send Me An Email", "Long Plickers", "Uncle Bob",
+    "Hiking", "Over Time", "Says he's a Geek", "Github Workflow",
+    "REST API", "Profession- alism", "Beer", "Tea", "HTTP is Just Text",
+    "gitkeeper", "'Word' Instead of Swear", "dotenv/ .env", "Thing is Thing",
+    "Auto- magically", "Random Gibberish", "Not Calling on Regulars", "Waiting for Volunteers",
+    "Multiple Ignored Texts", "Canvas Edits", "1Password", "Vague Question", "Unfunny Joke",
+    "Didn't Say What he Wanted", "Docker"
+];
 
 let isDarkMode = window.localStorage.getItem("darkMode") === "true";
 let hasBingo = false, cardSize = 5, card = "";
 let confettiTrig = false;
 let imageExists = false;
+
+let useCustomText = false;
 
 // Audio Context utils
 let context,
@@ -40,7 +42,7 @@ function random_generator(seed) {
         // Source: https://stackoverflow.com/a/19301306/582298
         seed = seed.toString();
         let h = 1779033703 ^ seed.length;
-        for(let i = 0; i < seed.length; i++) {
+        for (let i = 0; i < seed.length; i++) {
             h = Math.imul(h ^ seed.charCodeAt(i), 3432918353);
             h = h << 13 | h >>> 19;
         }
@@ -60,7 +62,7 @@ function random_generator(seed) {
 
     // Mix up the initial state
     for (let i = 0; i < 15; i++) { rand(); }
-    
+
     // return the random number generating function
     return rand;
 }
@@ -72,18 +74,23 @@ function reseed() {
     window.location.hash = Math.random().toString();
 }
 
-function confettiTrigger(){
+function confettiTrigger() {
     confettiTrig = !confettiTrig
-    if (confettiTrig) {startConfetti();}
-    else { stopConfetti(); } 
+    if (confettiTrig) { startConfetti(); }
+    else { stopConfetti(); }
+}
+
+function toggleCustomText() {
+    useCustomText = !useCustomText;
+    newCard();
 }
 
 /**
  * Clear visible selection of squares.
  */
 function clearSquareSelection() {
-    for (let i = 0; i < cardSize*cardSize - 1; i++) {
-        document.getElementById("square"+i).classList.remove("clicked");
+    for (let i = 0; i < cardSize * cardSize - 1; i++) {
+        document.getElementById("square" + i).classList.remove("clicked");
     }
 }
 
@@ -106,15 +113,25 @@ function clearCard() {
     clearInternalSquareSelection();
 }
 
+function getTextInput() {
+    let text = document.getElementById("customTextArea").value;
+    let textArray = text.split(",");
+    textArray = textArray.map(function (item) {
+        return item.trim();
+    });
+    return textArray;
+}
+
 /**
  * Creates a new bingo card with values that are randomly selected from a set of available options.
  */
 function newCard() {
     if (!window.location.hash) { reseed(); }
     let rand = random_generator(window.location.hash);
-    let shuffled = phrases.map(value => ({ value, sort: rand() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
-    for (let i = 0; i < cardSize*cardSize - 1; i++) {
-        let elem = document.getElementById("square"+i);
+    let textToUse =  useCustomText ? getTextInput() : phrases;
+    let shuffled = textToUse.map(value => ({ value, sort: rand() })).sort((a, b) => a.sort - b.sort).map(({ value }) => value);
+    for (let i = 0; i < cardSize * cardSize - 1; i++) {
+        let elem = document.getElementById("square" + i);
         elem.innerHTML = shuffled[i];
         elem.classList.remove("clicked");
     }
@@ -127,17 +144,17 @@ function newCard() {
  * and perform all actions associated with getting a bingo.
  */
 function initEvents() {
-    for (let i = 0; i < cardSize*cardSize - 1; i++) {
-        document.getElementById("square"+i).addEventListener("click", (e) => {
+    for (let i = 0; i < cardSize * cardSize - 1; i++) {
+        document.getElementById("square" + i).addEventListener("click", (e) => {
             e.target.classList.toggle("clicked");
             let isSelected = Array.from(e.target.classList).indexOf("clicked") !== -1;
-            let pos = (i > Math.floor(cardSize*cardSize/2) - 1) ? i+1 : i; // account for free space
+            let pos = (i > Math.floor(cardSize * cardSize / 2) - 1) ? i + 1 : i; // account for free space
             tallyClickedSquares(pos, isSelected ? 1 : -1);
             checkForBingo(isSelected);
         });
     }
     setColorModeColors(isDarkMode);
-    
+
     let AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
     gainNode = context.createGain();
@@ -191,9 +208,9 @@ function checkForBingo(isSelected) {
  * @returns true or false based on whether there is a bingo or not.
  */
 function checkHorizontalVerticalBingo() {
-    for (let i=0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
         let arr = card[i];
-        for (let j=0; j < arr.length; j++) {
+        for (let j = 0; j < arr.length; j++) {
             if (arr[j] === cardSize) { return true; }
         }
     }
@@ -241,7 +258,7 @@ function loadSound() {
     // Create a new request
     let request = new XMLHttpRequest();
     request.open("GET", audioURL, true);
-    request.responseType= 'arraybuffer';
+    request.responseType = 'arraybuffer';
     request.onload = function () {
         // Take the audio from http request and decode it in an audio buffer
         context.decodeAudioData(request.response, function (buffer) {
@@ -301,7 +318,7 @@ function createImage(id, img_id, put_id) {
 /**
  * Creates an image of the card or removes it if it already exists.
  */
- function htmlImage() {
+function htmlImage() {
     document.getElementById("imgButton").innerText = imageExists ? "Create Image" : "Remove Image";
     if (imageExists) {
         document.getElementById("#image").remove();

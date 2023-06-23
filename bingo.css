@@ -1,110 +1,135 @@
 body {
-    background: #1abc9c;
-    display: flex;
-    height: 100vh;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+  background: #1abc9c;
+  display: flex;
+  height: 100vh;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 body.darkMode {
-  background: #23272a;
+background: #23272a;
 }
 
 h1, p {
-  font-family: 'Roboto', sans-serif; font-size: 20pt;
-  font-weight: 600;
-  margin: 0 auto;
-  text-align: center;
-  padding: 30px;
-  color: white;
+font-family: 'Roboto', sans-serif; 
+font-size: 20pt;
+font-weight: 600;
+margin: 0 auto;
+text-align: center;
+padding: 30px;
+color: white;
 }
 
-body.darkMode h1, body.darkMode p {
+#customTextLabel {
+font-family: 'Roboto', sans-serif; 
+font-size: auto;
+font-weight: 600;
+margin: 0 auto;
+text-align: center;
+color: white;
+}
+
+body.darkMode h1, body.darkMode p , body.darkMode #customTextLabel{
 color: rgb(153, 170, 181);
 }
 
 p a {
-  text-decoration: none;
-  color: #f1c40f;
+text-decoration: none;
+color: #f1c40f;
 }
 
 button {
-  font-family: 'Roboto', sans-serif; font-size: 10pt;
-  font-weight: 600;
-  text-align: center;
-  color: black;
+font-family: 'Roboto', sans-serif; font-size: 10pt;
+font-weight: 600;
+text-align: center;
+color: black;
 }
 
 body.darkMode button {
-  background: rgb(153, 170, 181);
+background: rgb(153, 170, 181);
 }
 
 #bingotable {
-  margin: 0 auto;
-  text-align: center;
-  width: 420px;
-  height: 420px;
-  border-collapse: collapse;
-  background: white;
-  table-layout: fixed;
+margin: 0 auto;
+text-align: center;
+width: 420px;
+height: 420px;
+border-collapse: collapse;
+background: white;
+table-layout: fixed;
 }
 
 th, td {
-  font-family: Helvetica;
-  margin: 0 auto;
-  text-align: center;
-  border: 3px solid black;
-  width: 20%;
-  height: 18%;
+font-family: Helvetica;
+margin: 0 auto;
+text-align: center;
+border: 3px solid black;
+width: 20%;
+height: 18%;
 }
 
 th {
-    height: 10%;
-    background: #9b59b6;
+  height: 10%;
+  background: #9b59b6;
 }
 
 #squarefree {
-  background: cyan;
-  font-weight: 600;
-  font-size: 15pt;
+background: cyan;
+font-weight: 600;
+font-size: 15pt;
 }
 
 body.darkMode #squarefree {
-  background: rgb(114, 137, 218);
+background: rgb(114, 137, 218);
 }
 
 td {
-  background: white;
+background: white;
 }
 
 body.darkMode td {
-  background: rgb(153, 170, 181);
+background: rgb(153, 170, 181);
 }
 
 td.clicked {
-  background: cyan;
+background: cyan;
 }
 
 body.darkMode td.clicked {
-  background: rgb(114, 137, 218);
+background: rgb(114, 137, 218);
 }
 
 .disable-select {
-  user-select: none; /* supported by Chrome and Opera */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* supported by Chrome and Opera */
+-webkit-user-select: none; /* Safari */
+-khtml-user-select: none; /* Konqueror HTML */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 .fullscreen-behind {
-  position:absolute;
-  top:0;
-  left:0;
-  bottom:0;
-  right:0;
-  height:100%;
-  width:100%;
-  z-index: -1;
+position:absolute;
+top:0;
+left:0;
+bottom:0;
+right:0;
+height:100%;
+width:100%;
+z-index: -1;
+}
+
+#customTextArea {
+  box-sizing: border-box;
+  width: 200px;
+  height: 80px;
+}
+
+#custom-text-div {
+  display: inline-block; 
+  align-items: center;
+}
+
+#customTextCheck {
+  height: 100%;
 }
